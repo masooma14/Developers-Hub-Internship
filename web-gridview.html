@@ -1,0 +1,1001 @@
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>web-gridview</title>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+    background-color: #f8fafc;
+    color: #475467;
+    font-size: 13px;
+  }
+  header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      margin: 10px 100px 10px 70px;
+  }
+  .logo{
+      padding-left: 12px;
+  }
+  
+  .search {
+      display: flex;
+      width: 665px;
+      border: 2px solid #0D6EFD;
+      border-radius: 7px;
+      overflow: hidden;
+  }
+  
+  .search-input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      font-size: 16px;
+  }
+  .search-dropdown{
+      border: 1px solid #0D6EFD;
+  }
+  .dropdown {
+      border: none;
+      padding: 10px;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+  
+  }
+  
+  .arrow {
+      font-size: 12px;
+  }
+  
+  .search-button {
+      background: #0D6EFD;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+  }
+  .actions{
+      padding-right: 20px;
+  }
+  
+  /* Navbar */
+  .navbar {
+      display: flex;
+      justify-content: space-around;
+      font-size: large;
+      align-items: center;
+      padding: 10px 20px;
+      background: white;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 10px 50px 15px 10px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-menu {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+  }
+  
+  .nav-menu li {
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+  }
+  .flag {
+      width: 20px;
+      height: auto;
+      margin-left: 5px;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  button {
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 16px;
+  }
+  nav.breadcrumb {
+    font-size: 11px;
+    color: #98a2b3;
+    user-select: none;
+    margin-bottom: 24px;
+  }
+  nav.breadcrumb span.separator {
+    margin: 0 4px;
+  }
+  nav.breadcrumb .current {
+    color: #344054;
+    font-weight: 600;
+  }
+  .layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  aside.sidebar {
+    flex: 0 0 220px;
+    max-width: 220px;
+  }
+
+  details[open] > summary > i {
+    transform: rotate(180deg);
+  }
+  summary {
+    list-style: none;
+    padding: 12px 16px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #344054;
+    border-bottom: 1px solid #e4e7ec;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary i {
+    font-style: normal;
+    font-size: 10px;
+    color: #344054;
+    transition: transform 0.3s ease;
+  }
+  /* List inside details */
+  ul.filter-list,
+  form.filter-list {
+    padding: 12px 16px;
+    margin: 0;
+    list-style: none;
+    color: #475467;
+    font-size: 13px;
+    font-weight: 400;
+  }
+  ul.filter-list li,
+  form.filter-list label,
+  form.filter-list p {
+    margin-bottom: 8px;
+    cursor: pointer;
+    display: block;
+  }
+  ul.filter-list li:hover,
+  form.filter-list label:hover,
+  form.filter-list p:hover {
+    color: #344054;
+  }
+  ul.filter-list li:last-child,
+  form.filter-list p:last-child {
+    margin-bottom: 0;
+  }
+  ul.filter-list li.see-all,
+  form.filter-list p.see-all {
+    color: #2563eb;
+    font-weight: 600;
+    user-select: none;
+  }
+  /* Checkbox style */
+  input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+  input[type="checkbox"]:checked {
+    accent-color: #2563eb;
+  }
+  /* Main content */
+  main.content {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  /* Top bar */
+  .top-bar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+  .top-bar p.items-count {
+    font-size: 13px;
+    color: #344054;
+    font-weight: 400;
+    user-select: none;
+  }
+  .top-bar p.items-count strong {
+    font-weight: 600;
+  }
+  .top-bar .controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+  }
+  .top-bar label.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: #344054;
+    font-weight: 400;
+    cursor: pointer;
+    user-select: none;
+  }
+  .top-bar label.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    cursor: pointer;
+  }
+  select.sort-select {
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 13px;
+    color: #344054;
+    cursor: pointer;
+  }
+  select.sort-select:focus {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+  }
+  button.view-toggle {
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    padding: 4px 8px;
+    color: #344054;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  button.view-toggle:hover {
+    background-color: #f2f4f7;
+  }
+  .filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .filter-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background-color: #f2f4f7;
+    color: #344054;
+    font-size: 12px;
+    font-weight: 400;
+    padding: 4px 8px;
+    border-radius: 6px;
+    user-select: none;
+  }
+  .filter-tag i {
+    font-style: normal;
+    font-size: 10px;
+    cursor: pointer;
+  }
+  .filter-tag.clear-all {
+    color: #2563eb;
+    font-weight: 600;
+    margin-left: 8px;
+    cursor: pointer;
+  }
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+  }
+  @media (min-width: 640px) {
+    .products-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 768px) {
+    .products-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  article.product-card {
+    background: #fff;
+    border: 1px solid #e4e7ec;
+    border-radius: 6px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  article.product-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    margin-bottom: 12px;
+  }
+  .product-price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  .product-price {
+    font-weight: 600;
+    font-size: 14px;
+    color: #344054;
+  }
+  .product-price del {
+    font-weight: 400;
+    font-size: 12px;
+    color: #98a2b3;
+    margin-left: 6px;
+  }
+  button.wishlist-btn {
+    color: #344054;
+    font-size: 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  button.wishlist-btn:hover {
+    color: #2563eb;
+  }
+  .rating {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 6px;
+  }
+  .rating i {
+    font-size: 12px;
+    color: #f59e0b;
+  }
+  .rating i.empty {
+    color: #cbd5e1;
+  }
+  .rating span.score {
+    font-weight: 600;
+    font-size: 12px;
+    margin-left: 4px;
+  }
+  .product-desc {
+    font-size: 11px;
+    color: #667085;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+  nav.pagination {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #344054;
+    user-select: none;
+  }
+  nav.pagination label {
+    margin-right: 8px;
+  }
+  nav.pagination select {
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 13px;
+    color: #344054;
+    cursor: pointer;
+  }
+  nav.pagination select:focus {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+  }
+  nav.pagination button {
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    padding: 4px 8px;
+    background: none;
+    color: #344054;
+    cursor: pointer;
+  }
+  nav.pagination button:hover {
+    background-color: #f2f4f7;
+  }
+  nav.pagination button[aria-current="page"] {
+    background-color: #344054;
+    color: white;
+    border-color: #344054;
+    cursor: default;
+  }
+  .newsletter {
+    background: #eef1f6;
+    padding: 30px;
+    text-align: center;
+  }
+  
+  .newsletter h4 {
+    margin: 0 0 10px;
+  }
+  
+  .newsletter-form {
+    margin-top: 15px;
+  }
+  
+  .newsletter-form input {
+    padding: 10px;
+    width: 250px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    height: 20px;
+  }
+  
+  .newsletter-form button {
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 10px 10px;
+    cursor: pointer;
+  }
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 50px 30px; 
+    background: white;
+    border-top: 1px solid #ddd;
+    gap: 50px; 
+  }
+  
+  .footer-brand {
+    max-width: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .footer-brand h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #007bff;
+  }
+  .footer-brand h2 i {
+    color: #007bff;
+    size: 20px;
+  }
+  
+  .footer-brand p {
+    font-size: 23px;
+    color: #555;
+  }
+  
+  .social-icons i {
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  
+  .footer-links {
+    display: flex;
+    gap: 60px; 
+    flex-wrap: wrap;
+    margin-top: 10px; 
+  }
+  .footer-links div  {
+    display: flex;
+    flex-direction: column;
+    gap: 6px; 
+  }
+  
+  .footer-links div h4 {
+    margin-bottom: 10px;
+  }
+  
+  .get-app img {
+    width: 10px;
+    margin-top: 10px;
+  }
+  
+  
+  .footer-bottom-bar {
+    background: #f1f1f1;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+  }
+  .footer-bottom-bar p{
+    font-size: 20px;
+    margin-left: 70px;
+  
+  }  
+  
+  .get-app {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  
+  .get-app img {
+    width: 140px;
+    display: block;
+  }
+  
+  .language {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .language img {
+    width: 20px;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <img src="logo-colored.svg" alt="" class="logo">
+    <div class="search">
+        <input type="text" class="search-input" placeholder="Search">
+        <select class="search-dropdown">
+            <option> All category</option>
+            <option>Automobiles</option>
+            <option>Clothes and Wear</option>
+            <option>Home Interiors</option>
+            <option>More Categories</option>
+        </select>
+        <button class="search-button">Search</button>
+    </div>
+    <img src="Actions.png" alt="Actions" class="actions">
+</header>
+
+<nav class="navbar">
+    <ul class="nav-menu">
+        <li class="nav-item">☰  All category</li>
+        <li class="nav-item">Hot offers</li>
+        <li class="nav-item">Gift boxes</li>
+        <li class="nav-item">Projects</li>
+        <li class="nav-item">Menu item</li>
+        <li class="nav-item dropdown">Help <span class="arrow">▼</span></li>
+    </ul>
+    <div class="nav-right">
+        <span class="dropdown">English, USD <span class="arrow">▼</span></span>
+        <span class="flag-container">Ship to</span>
+            <img src="icons-of-germany-flag-fatherland-icon-png-3.png" alt="Germany Flag" class="flag">
+        
+    </div>
+</nav>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      Home
+      <span class="separator">&gt;</span>
+      Clothings
+      <span class="separator">&gt;</span>
+      Men’s wear
+      <span class="separator">&gt;</span>
+      <span class="current">Summer clothing</span>
+    </nav>
+    <div class="layout">
+      <aside class="sidebar" aria-label="Filters">
+        <details open>
+          <summary>
+            Category
+            <i class="fas fa-chevron-up"></i>
+          </summary>
+          <ul class="filter-list">
+            <li>Mobile accessory</li>
+            <li>Electronics</li>
+            <li>Smartphones</li>
+            <li>Modern tech</li>
+            <li class="see-all">See all</li>
+          </ul>
+        </details>
+        <details open>
+          <summary>
+            Brands
+            <i class="fas fa-chevron-up"></i>
+          </summary>
+          <form class="filter-list" aria-label="Brands filter">
+            <label><input type="checkbox" checked />Samsung</label>
+            <label><input type="checkbox" checked />Apple</label>
+            <label><input type="checkbox" />Huawei</label>
+            <label><input type="checkbox" checked />Poco</label>
+            <label><input type="checkbox" />Lenovo</label>
+            <p class="see-all" tabindex="0">See all</p>
+          </form>
+        </details>
+        <!-- Features -->
+        <details open>
+          <summary>
+            Features
+            <i class="fas fa-chevron-up"></i>
+          </summary>
+          <form class="filter-list" aria-label="Features filter">
+            <label><input type="checkbox" checked />Metallic</label>
+            <label><input type="checkbox" />Plastic cover</label>
+            <label><input type="checkbox" />8GB Ram</label>
+            <label><input type="checkbox" />Super power</label>
+            <label><input type="checkbox" />Large Memory</label>
+            <p class="see-all" tabindex="0">See all</p>
+          </form>
+        </details>
+        <!-- Price range -->
+        <details>
+          <summary>
+            Price range
+            <i class="fas fa-chevron-down"></i>
+          </summary>
+        </details>
+        <!-- Condition -->
+        <details>
+          <summary>
+            Condition
+            <i class="fas fa-chevron-down"></i>
+          </summary>
+        </details>
+        <!-- Ratings -->
+        <details>
+          <summary>
+            Ratings
+            <i class="fas fa-chevron-down"></i>
+          </summary>
+        </details>
+        <!-- Manufacturer -->
+        <details>
+          <summary>
+            Manufacturer
+            <i class="fas fa-chevron-down"></i>
+          </summary>
+        </details>
+      </aside>
+      <main class="content">
+        <div class="top-bar">
+          <p class="items-count">
+            12,911 items in <strong>Mobile accessory</strong>
+          </p>
+          <div class="controls">
+            <label class="checkbox-label">
+              <input type="checkbox" /> Verified only
+            </label>
+            <select class="sort-select" aria-label="Sort by">
+              <option>Featured</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+              <option>Newest</option>
+            </select>
+            <div class="icons">
+              <img src="btn-group.png" alt="" width="70px" height="30px">
+            </div>
+          </div>
+        </div>
+        <div class="filter-tags" aria-label="Active filters">
+          <div class="filter-tag" tabindex="0">
+            Samsung <i class="fas fa-times"></i>
+          </div>
+          <div class="filter-tag" tabindex="0">
+            Apple <i class="fas fa-times"></i>
+          </div>
+          <div class="filter-tag" tabindex="0">
+            Poco <i class="fas fa-times"></i>
+          </div>
+          <div class="filter-tag" tabindex="0">
+            Metallic <i class="fas fa-times"></i>
+          </div>
+          <div class="filter-tag" tabindex="0">
+            4 star <i class="fas fa-times"></i>
+          </div>
+          <div class="filter-tag" tabindex="0">
+            3 star <i class="fas fa-times"></i>
+          </div>
+          <div class="filter-tag clear-all" tabindex="0">Clear all filter</div>
+        </div>
+        <div class="products-grid" role="list">
+         
+          <article class="product-card" role="listitem">
+            <img
+              src="1.png" loading="lazy" width="160" height="160"/>
+            <div class="product-price-row">
+              <p class="product-price">
+                $99.50
+                <del>$1128.00</del>
+              </p>
+              <button class="wishlist-btn" aria-label="Add to wishlist">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="rating" aria-label="Rating: 7.5 stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span class="score">7.5</span>
+            </div>
+            <p class="product-desc">GoPro HERO6 4K Action Camera - Black</p>
+          </article>
+         
+          <article class="product-card" role="listitem">
+           <img src="image 22.png" alt="" width="160" height="160">
+            <div class="product-price-row">
+              <p class="product-price">
+                $99.50
+                <del>$1128.00</del>
+              </p>
+              <button class="wishlist-btn" aria-label="Add to wishlist">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="rating" aria-label="Rating: 5.9 stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <i class="fas fa-star empty"></i>
+              <span class="score">5.9</span>
+            </div>
+            <p class="product-desc">GoPro HERO6 4K Action Camera - Black</p>
+          </article>
+         
+          <article class="product-card" role="listitem">
+            <img src="image 23.png" alt="" width="160" height="160">
+            <div class="product-price-row">
+              <p class="product-price">$99.50</p>
+              <button class="wishlist-btn" aria-label="Add to wishlist">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="rating" aria-label="Rating: 7.5 stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <i class="fas fa-star empty"></i>
+              <span class="score">7.5</span>
+            </div>
+            <p class="product-desc">GoPro HERO6 4K Action Camera - Black</p>
+          </article>
+         
+          <article class="product-card" role="listitem">
+            <img src="image 32.png" alt=""width="160" height="160">
+            <div class="product-price-row">
+              <p class="product-price">
+                $99.50
+                <del>$1128.00</del>
+              </p>
+              <button class="wishlist-btn" aria-label="Add to wishlist">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="rating" aria-label="Rating: 7.5 stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span class="score">7.5</span>
+            </div>
+            <p class="product-desc">GoPro HERO6 4K Action Camera - Black</p>
+          </article>
+
+          <article class="product-card" role="listitem">
+           <img src="image 28.png" alt="" width="160" height="160">
+            <div class="product-price-row">
+              <p class="product-price">
+                $99.50
+                <del>$1128.00</del>
+              </p>
+              <button class="wishlist-btn" aria-label="Add to wishlist">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="rating" aria-label="Rating: 7.5 stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span class="score">7.5</span>
+            </div>
+            <p class="product-desc">GoPro HERO6 4K Action Camera - Black</p>
+          </article>
+        
+          <article class="product-card" role="listitem">
+            <img src="image 22.png" alt="" width="160" height="160">
+            <div class="product-price-row">
+              <p class="product-price">
+                $99.50
+                <del>$1128.00</del>
+              </p>
+              <button class="wishlist-btn" aria-label="Add to wishlist">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="rating" aria-label="Rating: 7.5 stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span class="score">7.5</span>
+            </div>
+            <p class="product-desc">GoPro HERO6 4K Action Camera - Black</p>
+          </article>
+         
+          <article class="product-card" role="listitem">
+           <img src="7.png" alt="" width="160" height="160">
+            <div class="product-price-row">
+              <p class="product-price">$99.50</p>
+              <button class="wishlist-btn" aria-label="Add to wishlist">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="rating" aria-label="Rating: 7.5 stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <i class="fas fa-star empty"></i>
+              <span class="score">7.5</span>
+            </div>
+            <p class="product-desc">GoPro HERO6 4K Action Camera - Black</p>
+          </article>
+        
+          <article class="product-card" role="listitem">
+            <img src="image 35.png" alt="" width="160" height="160">
+            <div class="product-price-row">
+              <p class="product-price">
+                $99.50
+                <del>$1128.00</del>
+              </p>
+              <button class="wishlist-btn" aria-label="Add to wishlist">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="rating" aria-label="Rating: 7.5 stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span class="score">7.5</span>
+            </div>
+            <p class="product-desc">GoPro HERO6 4K Action Camera - Black</p>
+          </article>
+         
+          <article class="product-card" role="listitem">
+            <img src="1.png" alt="">
+            <div class="product-price-row">
+              <p class="product-price">
+                $99.50
+                <del>$1128.00</del>
+              </p>
+              <button class="wishlist-btn" aria-label="Add to wishlist">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            <div class="rating" aria-label="Rating: 7.5 stars">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+              <span class="score">7.5</span>
+            </div>
+            <p class="product-desc">GoPro HERO6 4K Action Camera - Black</p>
+          </article>
+        </div>
+      
+        <nav class="pagination" aria-label="Pagination">
+          <label for="itemsPerPage">Show</label>
+          <select id="itemsPerPage" aria-label="Items per page">
+            <option>10</option>
+            <option>20</option>
+            <option>50</option>
+          </select>
+          <button aria-label="Previous page">&lt;</button>
+          <button aria-current="page">1</button>
+          <button>2</button>
+          <button>3</button>
+          <button aria-label="Next page">&gt;</button>
+        </nav>
+      </main>
+
+    </div>
+  </div>
+  <div class="newsletter">
+    <h4>Subscribe on our newsletter</h4>
+    <p>Get daily news on upcoming offers from many suppliers all over the world</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Email">
+      <button>Subscribe</button>
+    </div>
+  </div>
+
+  
+  <div class="footer-bottom">
+    <div class="footer-brand">
+      <h2><i class="fa-solid fa-lock"></i> Brand</h2>
+      <p>Best information about the company goes here but now lorem ipsum is</p>
+      <div class="social-icons">
+        <i class="fab fa-facebook-f"></i>
+        <i class="fab fa-twitter"></i>
+        <i class="fab fa-linkedin-in"></i>
+        <i class="fab fa-instagram"></i>
+        <i class="fab fa-youtube"></i>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <div>
+        <h4>About</h4>
+        <a href="#">About Us</a>
+        <a href="#">Find store</a>
+        <a href="#">Categories</a>
+        <a href="#">Blogs</a>
+      </div>
+      <div>
+        <h4>Partnership</h4>
+        <a href="#">About Us</a>
+        <a href="#">Find store</a>
+        <a href="#">Categories</a>
+        <a href="#">Blogs</a>
+      </div>
+      <div>
+        <h4>Information</h4>
+        <a href="#">Help Center</a>
+        <a href="#">Money Refund</a>
+        <a href="#">Shipping</a>
+        <a href="#">Contact us</a>
+      </div>
+      <div>
+        <h4>For users</h4>
+        <a href="#">Login</a>
+        <a href="#">Register</a>
+        <a href="#">Settings</a>
+        <a href="#">My Orders</a>
+      </div>
+      <div class="get-app">
+        <h4>Get app</h4>
+        <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="footer-bottom-bar">
+    <p>© 2023 Ecommerce.</p>
+    <div class="language">
+      <img src="https://flagcdn.com/us.svg" alt="English">
+      English <i class="fa-solid fa-chevron-down"></i>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

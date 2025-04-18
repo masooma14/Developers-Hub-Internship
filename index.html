@@ -4,10 +4,627 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecommerce Web Design</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7fafc;
+      margin: 0;
+      padding: 0;
+  }
+  
+  header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      margin: 10px 100px 10px 70px;
+  }
+  .logo{
+      padding-left: 12px;
+  }
+  
+  .search {
+      display: flex;
+      width: 665px;
+      border: 2px solid #0D6EFD;
+      border-radius: 7px;
+      overflow: hidden;
+  }
+  
+  .search-input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      font-size: 16px;
+  }
+  .search-dropdown{
+      border: 1px solid #0D6EFD;
+  }
+  .dropdown {
+      border: none;
+      padding: 10px;
+      background: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+  
+  }
+  
+  .arrow {
+      font-size: 12px;
+  }
+  
+  .search-button {
+      background: #0D6EFD;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-size: 16px;
+  }
+  .actions{
+      padding-right: 20px;
+  }
+  
+  /* Navbar */
+  .navbar {
+      display: flex;
+      justify-content: space-around;
+      font-size: large;
+      align-items: center;
+      padding: 10px 20px;
+      background: white;
+      box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+      padding: 10px 50px 15px 10px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-menu {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0;
+      margin: 0;
+  }
+  
+  .nav-menu li {
+      cursor: pointer;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+  }
+  .flag {
+      width: 20px;
+      height: auto;
+      margin-left: 5px;
+  }
+  .container{
+      background-color: white;
+      border: 1px solid #eff2f5;
+      border-radius: 4px;
+      height: 400px;
+      width: 1200px;
+      display: flex;
+      justify-content: space-around;
+      margin: 15px auto;
+      align-content: space-between;
+      align-items: center;
+      flex-wrap: nowrap;
+  }
+  
+  /* .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 15px; */
+  /* } */
+  
+  .side-menu{
+      display: flex;
+      flex-direction: column;
+      align-content: flex-start;
+      justify-content: left;
+      height: 380px;
+      width: 200px;
+      font-size: 14px;
+      font-weight: 300;
+  
+  }
+  .col-md-3{
+      height: 375px;
+      width: 20%;
+  }
+  .profile-card {
+      background-color: #E3F0FF;
+      padding: 20px;
+      border-radius: 10px;
+      display: inline-block;
+      margin: 0px -18px;
+  }
+  
+  .profile-info {
+      display: flex;
+      align-items: center;
+  }
+  
+  .profile-icon {
+      width: 50px;
+      height: 50px;
+      background-color: #d0e6ff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  
+  .profile-icon img {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+  }
+  
+  .profile-text {
+      margin-left: 10px;
+  }
+  
+  .profile-text p {
+      margin: 0;
+      font-weight: bold;
+  }
+  
+  .profile-text small {
+      color: #555;
+  }
+  .join-now{
+      display: block;
+      background-color: #127FFF;
+      border-radius: 6px;
+      color: white;
+      border: none;
+      width: 200px;
+      height: 30px;
+      margin: 9px 12px;
+  }
+  .log-in{
+      color: #127FFF;
+      border-radius: 6px;
+      background-color: white;
+      border: none;
+      width: 200px;
+      height: 30px;
+      margin: 0 12px;
+  }
+  .info-box {
+      padding: 15px;
+      border-radius: 10px;
+      color: white;
+      text-align: left;
+      display: flex;
+  
+  }
+  .orange-box {
+      background-color: #f58220;
+      width: 233px;
+      height: 60px;
+      margin: 9px -18px;
+  }
+  .blue-box {
+      background-color: #50b7c1;
+      width: 233px;
+      height: 60px;
+      margin: 9px -18px;
+  }
+  .deals{
+      height: 245px;
+      display: flex;
+      justify-content: center;
+  }
+  .deal-box{
+      margin: 0 auto;
+  }
+  
+  .deals-container {
+      width: 1200px;
+      height: 194px;
+      margin: 20px auto;
+      background: #fff;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #dee2e7;
+  }
+  .deals-info {
+      width: 225px;
+      text-align: left;
+      padding: 20px;
+      position: relative;
+      top: -20px;
+  }
+  .deals-info h3 {
+      font-size: 25px;
+      margin: auto;
+  }
+  .deals-info a {
+      color: #6c757d;
+      text-decoration: none;
+      font-size: 14px;
+      padding: auto;
+  }
+  .timer {
+      display: flex;
+      gap: 5px;
+      margin: 12px -5px;
+      width: 10%;
+  }
+  .timer div {
+      background: #343a40;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 5px;
+      font-size: 12px;
+      text-align: center;
+    
+  }
+  .deals-list {
+      display: flex;
+      width: 73%;
+      height: 100%;
+      gap: 20px;
+      overflow: hidden;
+      justify-content: center;
+  }
+  .deal-item {
+      background: white;
+      /* border: 1px solid #dee2e7; */
+      /* padding: 10px; */
+      text-align: center;
+      /* border-radius: 8px; */
+      /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+      width: 140px;
+  }
+  .deal-item img {
+      width: 160%;
+      height: 100%;
+      object-fit: contain;
+      text-align: center;
+  }
+  .discount {
+      background: #ffcccc;
+      color: red;
+      padding: 5px 10px;
+      border-radius: 15px;
+      display: inline-block;
+      font-size: 12px;
+      margin-top: 5px;
+  }
+  .block{
+      width: 1200px;
+      margin: auto;
+  }
+  .block img{
+      padding: 20px 0px;
+      cursor: pointer;
+      width: 100%
+  }
+  .supplier-section {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      width: 1200px;
+      margin: auto;
+    }
+    
+    .bg-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    
+    .overlay {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to right, rgba(38,132,255,0.9), rgba(102,187,255,0.8));
+      padding: 30px;
+      color: white;
+      height: 420px;
+    }
+    
+    .overlay .left {
+      max-width: 34%;
+      position: relative;
+      top: -134px;
+      padding: 10px;
+    }
+    
+    .overlay .right {
+      background: white;
+      color: black;
+      padding: 30px;
+      border-radius: 10px;
+      width: 491px;
+      height: 346px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    form{
+      display: flex;
+      flex-direction: column;
+    }
+    
+    #form ,select{
+      border-radius: 6px;
+      margin: 8px;
+      border: 1px solid #E0E0E0;
+    }
+    
+    input{
+      height: 40px;
+      padding-left: 15px;
+    }
+    textarea{
+      height: 73px;
+      padding-left: 15px;
+    }
+    .Quantity{
+      width: 200px;
+    }
+    select{
+      width: 101px;
+      padding: 5px;
+      height: 41px;
+      margin-left: -6px;
+    }
+    #submit {
+      width: 128px;
+      height: 40px;
+      border-radius: 6px;
+      background-color: #007aff;
+      color: white;
+      border: none;
+      position: relative;
+      right: -10px;
+      top: 15px;
+    }
+    .recommended-section {
+      padding: 40px;
+      background-color: #f8fcff;
+      height: 699px;
+      width: 1360px;
+      margin: auto;
+    }
+    
+    .recommended-section h2 {
+      font-size: 22px;
+      margin-bottom: 25px;
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 33px;
+  }
+    
+    .product-card {
+      background: white;
+      border: 1px solid #e4e4e4;
+      border-radius: 6px;
+      padding: 15px;
+      text-align: center;
+      transition: 0.3s ease;
+      height: 310px;
+      width: 220px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+    }
+    
+    .product-card:hover {
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+    
+    .product-card img {
+      height: 140px;
+      width: auto;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
+    
+    .product-card .price {
+      font-weight: bold;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+    
+    .product-card .desc {
+      font-size: 13px;
+      color: #444;
+      
+    }
+    
+    footer {
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    
+    .region-section {
+      padding: 30px 20px 10px;
+    }
+    
+    .region-section h3 {
+      margin-bottom: 10px;
+    }
+    
+    h3 {
+      font-size: 30px;
+    }
+    
+    .regions {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      max-width: 1000px;
+      margin: 0 auto 30px;
+    }
+    
+    .regions-column {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    
+    .region-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      font-size: 17px;
+    }
+    
+    .region-item img {
+      width: 40px;
+      height: auto;
+      border-radius: 3px;
+    }
+    
+    
+    .newsletter {
+      background: #eef1f6;
+      padding: 30px;
+      text-align: center;
+    }
+    
+    .newsletter h4 {
+      margin: 0 0 10px;
+    }
+    
+    .newsletter-form {
+      margin-top: 15px;
+    }
+    
+    .newsletter-form input {
+      padding: 10px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      height: 20px;
+    }
+    
+    .newsletter-form button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 10px 10px;
+      cursor: pointer;
+    }
+    
+    .footer-bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      padding: 50px 30px; 
+      background: white;
+      border-top: 1px solid #ddd;
+      gap: 50px; 
+    }
+    
+    .footer-brand {
+      max-width: 250px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    
+    .footer-brand h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+      color: #007bff;
+    }
+    .footer-brand h2 i {
+      color: #007bff;
+      size: 20px;
+    }
+    
+    .footer-brand p {
+      font-size: 23px;
+      color: #555;
+    }
+    
+    .social-icons i {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    
+    
+    .footer-links {
+      display: flex;
+      gap: 60px; 
+      flex-wrap: wrap;
+      margin-top: 10px; 
+    }
+    .footer-links div  {
+      display: flex;
+      flex-direction: column;
+      gap: 6px; 
+    }
+    
+    .footer-links div h4 {
+      margin-bottom: 10px;
+    }
+    
+    .get-app img {
+      width: 10px;
+      margin-top: 10px;
+    }
+    
+    
+    .footer-bottom-bar {
+      background: #f1f1f1;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      
+    }
+    .footer-bottom-bar p{
+      font-size: 20px;
+      margin-left: 70px;
+    
+    }  
+    
+    .get-app {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    
+    .get-app img {
+      width: 140px;
+      display: block;
+    }
+    
+    .language {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .language img {
+      width: 20px;
+    }
+</style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <img src="logo-colored.svg" alt="" class="logo">
         <div class="search">
@@ -23,8 +640,7 @@
         </div>
         <img src="Actions.png" alt="Actions" class="actions">
     </header>
-    
-    <!-- Navbar -->
+
     <nav class="navbar">
         <ul class="nav-menu">
             <li class="nav-item">☰  All category</li>
@@ -76,21 +692,229 @@
             
         </div>
           </div>
-    <div class="deals">
-        <img class="deal-box" src="Section-sale.png" alt="">
-        <!-- <h3>Deals and Offers</h3>
-        <div class="countdown">04 Days 13 Hours 34 Min 56 Sec</div>
-        <div class="products">
-            <div class="product">
-                <img src="smartwatch.jpg" alt="Smart Watch">
-                <p>-25%</p>
+          <div class="deals-container">
+            <div class="deals-info">
+                <h3>Deals and offers</h3>
+                <a href="#">Hygiene equipments</a>
+                <div class="timer">
+                    <div>04<br>Days</div>
+                    <div>13<br>Hour</div>
+                    <div>34<br>Min</div>
+                    <div>56<br>Sec</div>
+                </div>
             </div>
-            <div class="product">
-                <img src="laptop.jpg" alt="Laptop">
-                <p>-15%</p>
+            <div class="deals-list">
+                <div class="deal-item">
+                    <img src="Item.png" alt="Smart Watch">
+                    </div>
+                <div class="deal-item">
+                    <img src="Item (1).png" alt="Laptop">
+                </div>
+                <div class="deal-item">
+                    <img src="Item (3).png" alt="GoPro Camera">
+                </div>
+                <div class="deal-item">
+                    <img src="Item (4).png" alt="Headphones">
+                </div>
+                <div class="deal-item">
+                    <img src="Item (2).png" alt="Canon Camera">
+                </div>
             </div>
-        </div></div> -->
-    </di>
+        </div>
+        <div class="block">
+            <img src="Block-items-group (1).png" alt="">
+            <img src="Block-items-group (2).png" alt="">
+        </div>
+        <div class="supplier-section">
+            <img src="image 102.png" alt="warehouse" class="bg-image" />
+            <div class="overlay">
+              <div class="left">
+                <h1>An easy way to send<br />requests to all suppliers</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.</p>
+              </div>
+              <div class="right">
+                <h3>Send quote to suppliers</h3>
+                <form>
+                  <input id="form" type="text" placeholder="What item you need?" />
+                  <textarea id="form" placeholder="Type more details"></textarea>
+                  <div class="quantity-row">
+                    <input id="form" class="Quantity" type="number" placeholder="Quantity" />
+                    <select>
+                      <option>Pcs</option>
+                      <option>Kgs</option>
+                      <option>Liters</option>
+                    </select>
+                  </div>
+                  <button id="submit">Send inquiry</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="recommended-section">
+            <h2>Recommended items</h2>
+            <div class="product-grid">
+              
+              <!-- Example Card Start -->
+              <div class="product-card">
+                <img src="1.png" alt="product" />
+                <p class="price">$10.30</p>
+                <p class="desc">T-shirts with multiple colors, for men</p>
+              </div>
+              <div class="product-card">
+                <img src="3.png" alt="product" />
+                <p class="price">$10.30</p>
+                <p class="desc">T-shirts with multiple colors, for men</p>
+              </div>
+              <div class="product-card">
+                <img src="image 30.png" alt="product" />
+                <p class="price">$10.30</p>
+                <p class="desc">T-shirts with multiple colors, for men</p>
+              </div>
+              <div class="product-card">
+                <img src="image 24.png" alt="product" />
+                <p class="price">$10.30</p>
+                <p class="desc">T-shirts with multiple colors, for men</p>
+              </div>
+              <div class="product-card">
+                <img src="image 26.png" alt="product" />
+                <p class="price">$10.30</p>
+                <p class="desc">T-shirts with multiple colors, for men</p>
+              </div>
+              <div class="product-card">
+                <img src="4.png" alt="product" />
+                <p class="price">$10.30</p>
+                <p class="desc">T-shirts with multiple colors, for men</p>
+              </div>
+              <div class="product-card">
+                <img src="image 86.png" alt="product" />
+                <p class="price">$10.30</p>
+                <p class="desc">T-shirts with multiple colors, for men</p>
+              </div>
+              <div class="product-card">
+                <img src="image 26.png" alt="product" />
+                <p class="price">$10.30</p>
+                <p class="desc">T-shirts with multiple colors, for men</p>
+              </div>
+              <div class="product-card">
+                <img src="image 90.png" alt="product" />
+                <p class="price">$10.30</p>
+                <p class="desc">T-shirts with multiple colors, for men</p>
+              </div>
+              <div class="product-card">
+                <img src="image 85.png" alt="product" />
+                <p class="price">$10.30</p>
+                <p class="desc">T-shirts with multiple colors, for men</p>
+              </div>
+              
+
+              
+          
+            </div>
+          </div>
+
+          
 </div>
+  <footer>
+    
+    <div class="region-section">
+      <h3>Suppliers by region</h3>
+      <div class="regions">
+        <div class="regions-column">
+          <div class="region-item"><img src="https://flagcdn.com/ae.svg" alt="UAE" /> <div>Arabic Emirates<br>
+            <span>shopname.ae</span></div></div>
+          <div class="region-item"><img src="https://flagcdn.com/dk.svg" alt="Denmark" /> <div>Denmark<br>
+            <span>denmark.com.dk</span></div></div>
+        </div>
+        <div class="regions-column">
+          <div class="region-item"><img src="https://flagcdn.com/au.svg" alt="Australia" /> <div>Australia<br>
+            <span>shopname.ae</span></div></div>
+          <div class="region-item"><img src="https://flagcdn.com/us.svg" alt="USA" /> <div>United States<br>
+            <span>shopname.ae</span></div></div>
+        </div>
+        <div class="regions-column">
+          <div class="region-item"><img src="https://flagcdn.com/ru.svg" alt="Russia" /> <div>Russia<br><span>shopname.ru</span></div></div>
+          <div class="region-item"><img src="https://flagcdn.com/it.svg" alt="Italy" /> <div>Italy<br><span>shopname.it</span></div></div>
+        </div>
+        <div class="regions-column">
+          <div class="region-item"><img src="https://flagcdn.com/fr.svg" alt="France" /> <div>France<br><span>shopname.com.fr</span></div></div>
+          <div class="region-item"><img src="https://flagcdn.com/ae.svg" alt="UAE" /> <div>Dubai<br><span>dubai.com</span></div></div>
+        </div>
+        <div class="regions-column">
+          <div class="region-item"><img src="https://flagcdn.com/cn.svg" alt="China" /> <div>China<br><span>shopname.ae</span></div></div>
+          <div class="region-item"><img src="https://flagcdn.com/gb.svg" alt="UK" /> <div>Great Britain<br><span>shopname.co.uk</span></div></div>
+        </div>
+      </div>
+      
+
+    
+    <div class="newsletter">
+      <h4>Subscribe on our newsletter</h4>
+      <p>Get daily news on upcoming offers from many suppliers all over the world</p>
+      <div class="newsletter-form">
+        <input type="email" placeholder="Email">
+        <button>Subscribe</button>
+      </div>
+    </div>
+
+    
+    <div class="footer-bottom">
+      <div class="footer-brand">
+        <h2><i class="fa-solid fa-lock"></i> Brand</h2>
+        <p>Best information about the company goes here but now lorem ipsum is</p>
+        <div class="social-icons">
+          <i class="fab fa-facebook-f"></i>
+          <i class="fab fa-twitter"></i>
+          <i class="fab fa-linkedin-in"></i>
+          <i class="fab fa-instagram"></i>
+          <i class="fab fa-youtube"></i>
+        </div>
+      </div>
+
+      <div class="footer-links">
+        <div>
+          <h4>About</h4>
+          <a href="#">About Us</a>
+          <a href="#">Find store</a>
+          <a href="#">Categories</a>
+          <a href="#">Blogs</a>
+        </div>
+        <div>
+          <h4>Partnership</h4>
+          <a href="#">About Us</a>
+          <a href="#">Find store</a>
+          <a href="#">Categories</a>
+          <a href="#">Blogs</a>
+        </div>
+        <div>
+          <h4>Information</h4>
+          <a href="#">Help Center</a>
+          <a href="#">Money Refund</a>
+          <a href="#">Shipping</a>
+          <a href="#">Contact us</a>
+        </div>
+        <div>
+          <h4>For users</h4>
+          <a href="#">Login</a>
+          <a href="#">Register</a>
+          <a href="#">Settings</a>
+          <a href="#">My Orders</a>
+        </div>
+        <div class="get-app">
+          <h4>Get app</h4>
+          <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
+        </div>
+        
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <p>© 2023 Ecommerce.</p>
+      <div class="language">
+        <img src="https://flagcdn.com/us.svg" alt="English">
+        English <i class="fa-solid fa-chevron-down"></i>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
